@@ -12,10 +12,23 @@ form.addEventListener("submit", (e) => {
   nameCheck();
 });
 
-checkInputs = function () {
+checkInputs = async function () {
   emailVal = email.value;
   passwordVal = password.value;
   password2Val = password2.val;
+  ////email validacija priko api////
+  try {
+    const res = await fetch(
+      `https://api.zerobounce.net/v1/validate?apikey=b6f79ec22fe6448082d9e8eca3dbad87&email=${emailVal}`
+    );
+    const data = await res.json();
+
+    if (data.status !== "Valid") {
+      email.classList.add(".error");
+    }
+  } catch (err) {
+    alert(err.message);
+  }
 };
 
 nameCheck = function () {
