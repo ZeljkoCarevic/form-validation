@@ -29,6 +29,9 @@ checkInputs = async function () {
   } catch (err) {
     alert(err.message);
   }
+
+  ///password val, mora imat broj, soec znak, najmanje 6 slova itd///
+  
 };
 
 nameCheck = function () {
