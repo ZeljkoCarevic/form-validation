@@ -9,14 +9,50 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
 
   checkInputs();
-  nameCheck();
+  //nameCheck();
+  //emailCheck()
 });
 
-checkInputs = async function () {
-  emailVal = email.value;
+errorMsg = function (class1, class2) {
+  class1.classList.add(".error");
+  class2.classList.add(".error");
+};
+
+checkInputs = function () {
   passwordVal = password.value;
-  password2Val = password2.val;
+  password2Val = password2.value;
+
   ////email validacija priko api////
+
+  ///password val, mora imat broj, soec znak, najmanje 6 slova itd///
+
+  if (password2Val.length < 6 || passwordVal.length < 6) {
+    errorMsg(password, password2);
+  } else if (password2Val !== passwordVal) {
+    errorMsg(password, password2);
+  } else password2Val;
+};
+
+nameCheck = function () {
+  nameVal = personName.value;
+  surnameVal = surname.value;
+
+  reg = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~ 0-9]/;
+
+  if (reg.test(nameVal) || reg.test(surnameVal)) {
+    //ovo gleda jel ima specijalnih znakova ili brojeva u imenu ili prezimenu
+    errorMsg(personName, surname);
+  } else if (
+    //a ovo jel prvo slovo veliko
+    nameVal[0].toUpperCase() !== nameVal[0] ||
+    surnameVal[0].toUpperCase() !== surnameVal[0]
+  ) {
+    errorMsg(personName, surname);
+  }
+};
+
+emailCheck = async function () {
+  emailVal = email.value;
   try {
     const res = await fetch(
       `https://api.zerobounce.net/v1/validate?apikey=b6f79ec22fe6448082d9e8eca3dbad87&email=${emailVal}`
@@ -28,31 +64,5 @@ checkInputs = async function () {
     }
   } catch (err) {
     alert(err.message);
-  }
-
-  ///password val, mora imat broj, soec znak, najmanje 6 slova itd///
-  
-};
-
-nameCheck = function () {
-  errorMsg = function () {
-    personName.classList.add(".error");
-    surname.classList.add(".error"); //triba napravit classu error koja ce prominit border u crveno
-    console.log("test");
-  };
-  nameVal = personName.value;
-  surnameVal = surname.value;
-
-  reg = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~ 0-9]/;
-
-  if (reg.test(nameVal) || reg.test(surnameVal)) {
-    //ovo gleda jel ima specijalnih znakova ili brojeva u imenu ili prezimenu
-    errorMsg();
-  } else if (
-    //a ovo jel prvo slovo veliko
-    nameVal[0].toUpperCase() !== nameVal[0] ||
-    surnameVal[0].toUpperCase() !== surnameVal[0]
-  ) {
-    errorMsg();
   }
 };
