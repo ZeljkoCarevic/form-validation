@@ -22,7 +22,7 @@ checkInputs = function () {
   passwordVal = password.value;
   password2Val = password2.value;
 
-  ////email validacija priko api////
+  reg = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~ 0-9]/;
 
   ///password val, mora imat broj, soec znak, najmanje 6 slova itd///
 
@@ -30,7 +30,9 @@ checkInputs = function () {
     errorMsg(password, password2);
   } else if (password2Val !== passwordVal) {
     errorMsg(password, password2);
-  } else password2Val;
+  } else if (!reg.test(passwordVal) || !reg.test(password2Val)) {
+    errorMsg(password, password2);
+  }
 };
 
 nameCheck = function () {
