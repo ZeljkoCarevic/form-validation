@@ -10,7 +10,7 @@ form.addEventListener("submit", (e) => {
 
   checkInputs();
   //nameCheck();
-  //emailCheck()
+  //emailCheck() ovo je zakomentirano jer imamo samo 100 poziva misecno
 });
 
 errorMsg = function (class1, class2) {
@@ -32,6 +32,7 @@ checkInputs = function () {
     errorMsg(password, password2);
   } else if (!reg.test(passwordVal) || !reg.test(password2Val)) {
     errorMsg(password, password2);
+    console.log("test");
   }
 };
 
